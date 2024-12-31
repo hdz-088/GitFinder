@@ -1,9 +1,24 @@
 {
+  "name": "gitfinder",
+  "version": "1.0.0",
+  "description": "NodeJs Project to find GitHub account information using GitHub API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "url": "^0.11.0",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7"
+  },
   "devDependencies": {
     "tailwindcss": "^3.4.17"
   },
-  "dependencies": {
-    "axios": "^1.7.9",
-    "dotenv": "^16.4.7"
-  }
+  "engines": {
+    "node": "14.x"
+  },
+  "author": "HDz",
+  "license": ""
 }
