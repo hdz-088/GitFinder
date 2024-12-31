@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitFinder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./output.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon" />
+    <script>
+      function toggleDarkMode() {
+        const html = document.documentElement;
+        const button = document.getElementById("themeToggleButton");
+
+        if (html.classList.contains("dark")) {
+          html.classList.remove("dark");
+          localStorage.theme = "light";
+          button.textContent = "Dark";
+        } else {
+          html.classList.add("dark");
+          localStorage.theme = "dark";
+          button.textContent = "Light";
+        }
+      }
+
+      // Initialize theme and button text based on preference
+      document.addEventListener("DOMContentLoaded", () => {
+        const html = document.documentElement;
+        const button = document.getElementById("themeToggleButton");
+
+        if (
+          localStorage.theme === "dark" ||
+          (!("theme" in localStorage) &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          html.classList.add("dark");
+          button.textContent = "Light";
+        } else {
+          html.classList.remove("dark");
+          button.textContent = "Dark";
+        }
+      });
+    </script>
+  </head>
+  <!-- <button
+    id="themeToggleButton"
+    onclick="toggleDarkMode()"
+    class="px-4 py-2 bg-blue-500 text-white rounded"
+  ></button> -->
+  <body
+    class="bg-[#f2f5f8] p-4 font-body flex flex-col items-center justify-center"
+  >
+    <main
+      class="flex items-center justify-center w-full md:w-[90vw] xl:w-[80vw] mt-4"
+    >
+      <div id="info">
+        <!-- SEARCH BOX -->
+        <div
+          class="text-center flex items-center justify-between flex-col md:flex-row gap-4"
+        >
+          <p class="font-semibold text-3xl text-gray-500">
+            <span class="text-blue-600">Git</span>Finder
+          </p>
+          <div class="text-center flex items-center justify-">
+            <form
+              action="/"
+              method="GET"
+              class="flex items-center justify-center"
+            >
+              <input
+                placeholder="Enter GitHub Username"
+                class="input shadow-lg focus:border-2 border-gray-300 px-5 py-3 rounded-l-xl w-full sm:w-72 transition-all sm:focus:w-80 outline-none focus:border-none"
+                name="username"
+                type="search"
+              />
+              <button class="bg-slate-500 px-5 py-3 rounded-r-xl" type="submit">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  height="24"
+                  width="24"
+                >
+                  <path
+                    fill="#ffffff"
+                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                  />
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+        <!-- STATS CARDS  -->
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 auto-cols-auto gap-4 mt-10 justify-items-center"
+        >
+          <div
+            class="w-full xl:w-100 h-20 flex bg-white p-2 gap-10 px-8 items-center justify-between rounded-lg shadow-md sm:w-60"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+              class="w-12 h-12 p-2 bg-[#ffe0f0] rounded-lg"
+            >
+              <path
+                fill="#da4a91"
+                d="M96 0C43 0 0 43 0 96L0 416c0 53 43 96 96 96l288 0 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l0-64c17.7 0 32-14.3 32-32l0-320c0-17.7-14.3-32-32-32L384 0 96 0zm0 384l256 0 0 64L96 448c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16l192 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-192 0c-8.8 0-16-7.2-16-16zm16 48l192 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-192 0c-8.8 0-16-7.2-16-16s7.2-16 16-16z"
+              />
+            </svg>
+            <span>
+              <p class="font-extrabold text-slate-900 text-3xl font-stat">
+                {%REPO_CNT%}
+              </p>
+              <p class="text-slate-500 font-medium text-center 0 text-sm">
+                Repos
+              </p>
+            </span>
+          </div>
+          <div
+            class="w-full md:w-100 h-20 flex bg-white p-2 gap-10 px-8 items-center justify-between rounded-lg shadow-md sm:w-60"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 512"
+              class="w-12 h-12 p-2 bg-[#e0fcff] rounded-lg"
+            >
+              <path
+                fill="#2caeba"
+                d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3zM609.3 512l-137.8 0c5.4-9.4 8.6-20.3 8.6-32l0-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2l61.4 0C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"
+              />
+            </svg>
+            <span>
+              <p class="font-extrabold text-slate-900 text-3xl font-stat">
+                {%FOLLOWERS_CNT%}
+              </p>
+              <p class="text-slate-500 font-medium text-center text-sm">
+                Followers
+              </p>
+            </span>
+          </div>
+          <div
+            class="w-full md:w-100 h-20 flex bg-white p-2 gap-10 px-8 items-center justify-between rounded-lg shadow-md sm:w-60"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 512"
+              class="w-12 h-12 p-2 bg-[#e6e6ff] rounded-lg"
+            >
+              <path
+                fill="#5d55fa"
+                d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3zM504 312l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+              />
+            </svg>
+            <span>
+              <p class="font-extrabold text-slate-900 text-3xl font-stat">
+                {%FOLLOWING_CNT%}
+              </p>
+              <p class="text-slate-500 font-medium text-center text-sm">
+                Following
+              </p>
+            </span>
+          </div>
+          <div
+            class="w-full md:w-100 h-20 flex bg-white p-2 gap-10 px-8 items-center justify-between rounded-lg shadow-md sm:w-60"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 512"
+              class="w-12 h-12 p-2 bg-[#fffbea] rounded-lg"
+            >
+              <path
+                fill="#f0b429"
+                d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"
+              />
+            </svg>
+            <span>
+              <p class="font-extrabold text-slate-900 text-3xl font-stat">
+                {%GIST_CNT%}
+              </p>
+              <p class="text-slate-500 font-medium text-center text-sm">
+                Gists
+              </p>
+            </span>
+          </div>
+        </div>
+        <!-- USER AND FOLLOWERS CONTAINER -->
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 gap-10 items-center justify-center mt-10"
+        >
+          <div
+            class="bg-white max-h-80 min-h-80 p-4 rounded-lg shadow-xl relative rounded-tl-none flex flex-col gap-4"
+          >
+            <span
+              class="absolute -top-6 left-0 bg-white px-4 rounded-t-lg py-1 text-center text-sm font-medium text-slate-500"
+              >User</span
+            >
+            <div class="flex flex-row justify-between items-center">
+              <div class="flex items-center gap-4">
+                <img
+                  src="{%USER_AVATAR%}"
+                  alt=""
+                  class="w-20 rounded-full shadow-lg"
+                />
+                <span
+                  ><p class="font-medium text-xl">{%FULL_NAME%}</p>
+                  <p class="font-stat text-slate-600 font-medium text-sm">
+                    @{%USER_NAME%}
+                  </p></span
+                >
+              </div>
+              <a href="{%USER_LINK%}" target="_blank">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 512"
+                  class="w-10 h-10 p-2 rounded-lg"
+                >
+                  <path
+                    fill="#303030"
+                    d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3zM504 312l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+                  />
+                </svg>
+              </a>
+            </div>
+            <div class="overflow-scroll max-h-60">
+              <p>{%BIO%}</p>
+              <p class="flex gap-4 items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20"
+                  width="20"
+                  viewBox="0 0 384 512"
+                >
+                  <path
+                    fill="#475569"
+                    d="M64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16l80 0 0-64c0-26.5 21.5-48 48-48s48 21.5 48 48l0 64 80 0c8.8 0 16-7.2 16-16l0-384c0-8.8-7.2-16-16-16L64 48zM0 64C0 28.7 28.7 0 64 0L320 0c35.3 0 64 28.7 64 64l0 384c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm88 40c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16l0 48c0 8.8-7.2 16-16 16l-48 0c-8.8 0-16-7.2-16-16l0-48zM232 88l48 0c8.8 0 16 7.2 16 16l0 48c0 8.8-7.2 16-16 16l-48 0c-8.8 0-16-7.2-16-16l0-48c0-8.8 7.2-16 16-16zM88 232c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16l0 48c0 8.8-7.2 16-16 16l-48 0c-8.8 0-16-7.2-16-16l0-48zm144-16l48 0c8.8 0 16 7.2 16 16l0 48c0 8.8-7.2 16-16 16l-48 0c-8.8 0-16-7.2-16-16l0-48c0-8.8 7.2-16 16-16z"
+                  /></svg
+                >{%COMPANY%}
+              </p>
+              <p class="flex gap-4 items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20"
+                  width="20"
+                  viewBox="0 0 640 512"
+                >
+                  <path
+                    fill="#475569"
+                    d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"
+                  /></svg
+                ><a href="{%BIO_LINK%}" target="_blank">{%BIO_LINK%}</a>
+              </p>
+              <p class="flex gap-4 items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20"
+                  width="20"
+                  viewBox="0 0 640 512"
+                  class="text-center"
+                >
+                  <path
+                    fill="#475569"
+                    d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
+                  /></svg
+                >{%USER_LOCATION%}
+              </p>
+              <p class="flex gap-4 items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20"
+                  width="20"
+                  viewBox="0 0 640 512"
+                >
+                  <path
+                    fill="#475569"
+                    d="M256 64C150 64 64 150 64 256s86 192 192 192c17.7 0 32 14.3 32 32s-14.3 32-32 32C114.6 512 0 397.4 0 256S114.6 0 256 0S512 114.6 512 256l0 32c0 53-43 96-96 96c-29.3 0-55.6-13.2-73.2-33.9C320 371.1 289.5 384 256 384c-70.7 0-128-57.3-128-128s57.3-128 128-128c27.9 0 53.7 8.9 74.7 24.1c5.7-5 13.1-8.1 21.3-8.1c17.7 0 32 14.3 32 32l0 80 0 32c0 17.7 14.3 32 32 32s32-14.3 32-32l0-32c0-106-86-192-192-192zm64 192a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z"
+                  /></svg
+                ><a href="mailto:{%USER_MAIL%}">{%USER_MAIL%}</a>
+              </p>
+              <p class="flex gap-4 items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20"
+                  width="20"
+                  viewBox="0 0 640 512"
+                >
+                  <path
+                    fill="#475569"
+                    d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"
+                  /></svg
+                ><a href="https://x.com/{%USER_TWITTER%}" target="_blank"
+                  >@{%USER_TWITTER%}</a
+                >
+              </p>
+              <p class="flex gap-4 items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20"
+                  width="20"
+                  viewBox="0 0 640 512"
+                  class="text-center"
+                >
+                  <path
+                    fill="#475569"
+                    d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40L64 64C28.7 64 0 92.7 0 128l0 16 0 48L0 448c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-256 0-48 0-16c0-35.3-28.7-64-64-64l-40 0 0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40L152 64l0-40zM48 192l352 0 0 256c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256z"
+                  /></svg
+                >{%USER_CREATED%}
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white max-h-80 min-h-80 p-4 rounded-lg shadow-xl relative rounded-tl-none"
+          >
+            <span
+              class="absolute -top-6 left-0 bg-white px-4 rounded-t-lg py-1 text-center text-sm font-medium text-slate-500"
+              >Followers
+            </span>
+            <!-- <span
+              class="absolute -top-6 left-24 bg-transparent px-4 rounded-t-lg py-1 text-center text-sm font-medium text-slate-500"
+              >Following</span
+            > -->
+            <div class="overflow-scroll max-h-72">
+              <!-- FOLLOWERS  -->
+              {%FOLLOWERS_LIST%}
+            </div>
+          </div>
+        </div>
+        <!-- REPOSITORY LIST -->
+        <div
+          id="repos"
+          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mt-10 gap-4"
+        >
+          <!-- REPO 01 -->
+          {%REPOSITORIES%}
+        </div>
+        <p class="text-center text-gray-700 mt-4">
+          Made by
+          <a
+            href="https://hdzala.vercel.app"
+            class="font-semibold text-center underline"
+            target="_blank"
+            >HDz</a
+          >
+          🦉
+        </p>
+      </div>
+    </main>
+    <script
+      src="https://kit.fontawesome.com/97fcb74a5e.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
