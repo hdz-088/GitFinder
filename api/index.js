@@ -291,13 +291,16 @@ const fs = require("fs");
 const path = require("path");
 require("dotenv").config();
 
-const tempIndex = fs.readFileSync("./src/index.html", "utf-8");
+const tempIndex = fs.readFileSync(
+  path.join(__dirname, "../src/index.html"),
+  "utf-8"
+);
 const tempFollowers = fs.readFileSync(
-  "./src/templates/templates-follow.html",
+  path.join(__dirname, "../src/templates/templates-follow.html"),
   "utf-8"
 );
 const tempRepos = fs.readFileSync(
-  "./src/templates/templates-repo.html",
+  path.join(__dirname, "../src/templates/templates-repo.html"),
   "utf-8"
 );
 
